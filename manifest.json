@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Gamblit +",
+  "version": "1.0",
+  "description": "Lisää All In -napin, työkaluja ja kustomoidun logon Gamblit.net -sivustolle.",
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.gamblit.net/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.gamblit.net/*"],
+      "js": ["content.js", "blackjack.js", "observer.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["logo-plus.png"],
+      "matches": ["*://*.gamblit.net/*"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "gamblitplus@paikallinen.testi"
+    }
+  }
+}

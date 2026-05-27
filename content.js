@@ -49,9 +49,7 @@ function updateChallengesVisibility() {
 }
 
 
-// ==========================================
-// 3. GAMBLIT+ TAB & TOGGLE CONTROLS
-// ==========================================
+// g+ settings tab
 function createToggleSwitch(storageKey, defaultValue = false) {
   const label = document.createElement("label");
   label.className = "gplus-switch";
@@ -82,10 +80,10 @@ function createToggleSwitch(storageKey, defaultValue = false) {
 
   function updateSliderStyle() {
     if (checkbox.checked) {
-      slider.style.backgroundColor = "#7c3aed"; // Violet accent
+      slider.style.backgroundColor = "#7c3aed"; 
       slider.innerHTML = `<span style="position: absolute; content: ''; height: 18px; width: 18px; left: 19px; bottom: 3px; background-color: white; transition: 0.2s; border-radius: 50%;"></span>`;
     } else {
-      slider.style.backgroundColor = "#374151"; // Charcoal dark accent
+      slider.style.backgroundColor = "#374151"; 
       slider.innerHTML = `<span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.2s; border-radius: 50%;"></span>`;
     }
   }
@@ -140,7 +138,7 @@ function createSettingsRow(
 }
 
 function loadGamblitPlusSettings(contentContainer) {
-  // Estetään uudelleenluonti, jos asetukset ovat jo näkyvissä
+  // block re-creates
   if (contentContainer.querySelector('[data-gplus-settings]')) return;
 
   safeMutate(() => {
@@ -196,7 +194,7 @@ function injectGamblitCategory() {
 
     btn.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("g+ : Gamblit+ category tab clicked!");
+      console.log("g+ :  category tab clicked!");
 
       const contentContainer = document.querySelector(
         ".flex.flex-wrap.gap-1.pb-2",
@@ -232,6 +230,10 @@ function getAvailableBalance() { // getBal()
   }
   return null;
 }
+function getBal() {
+  return getAvailableBalance();
+}
+
 
 function createAllInButton() {
   if (document.getElementById("gamblit-plus-allin")) return null;
@@ -249,7 +251,7 @@ function createAllInButton() {
     const betInput =
       document.querySelector('input[type="number"]') ||
       document.querySelector("input");
-    const maxBalance = getAvailableBalance();
+    const maxBalance = getBal(); // gets balance using wrapper
 
     if (betInput && maxBalance) {
       const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
@@ -280,9 +282,9 @@ function injectAllInButton() {
 
 
 const observer = new MutationObserver(() => {
-  if (isInactivating) return; // Ohitetaan kierros, jos koodi itse muokkaa sivua
+  if (isInactivating) return; // block loops
 
-  injectGamblitCategory(); // Tämä puuttui
+  injectGamblitCategory(); 
   updateChallengesVisibility();
 
   const isLogoEnabled = localStorage.getItem("gplus_custom_logo") !== "false";

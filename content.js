@@ -6,11 +6,39 @@ function safeMutate(callback) {
   callback();
   setTimeout(() => { isInactivating = false; }, 0);
 }
+function replaceWelcomeText() {
+  const isEnabled = localStorage.getItem("gplus_custom_welcome") !== "false";
+  if (!isEnabled) return;
+
+  const welcomeText = document.querySelector('p.font-unbounded');
+  if (welcomeText) {
+    const targetText = "Welcome to Gamblit+, "; 
+    const targetColor = "#d4b909";       // gold
+
+    
+    if (welcomeText.textContent !== targetText || welcomeText.style.color !== targetColor) {
+      safeMutate(() => {
+        // Vaihdetaan väri
+        welcomeText.style.color = targetColor;
+        
+        
+        welcomeText.replaceChildren(document.createTextNode(targetText));
+        
+        console.log("g+ -> Welcome text replaced.");
+      });
+    }
+  }
+}
+
+
+
+
 
 function replaceLogo() {
-  const logoImg =
-    document.querySelector('img[src*="/assets/logo-"]') ||
-    document.querySelector('img[alt="logo"]');
+    const logoImg = document.querySelector('img[src*="/assets/logo-"]') || 
+                  document.querySelector('img[src^="data:image/svg+xml"]') ||
+                  document.querySelector('img[alt="Logo"]') || 
+                  document.querySelector('img[alt="logo"]');
   if (logoImg) {
     const newLogoUrl = browser.runtime.getURL("logo-plus.png");
     if (logoImg.src !== newLogoUrl) {
@@ -170,11 +198,20 @@ function loadGamblitPlusSettings(contentContainer) {
       false,
       () => { updateChallengesVisibility(); }
     );
-
+      // UUSI RIVI TERVETULOTEKSTILLE
+      const customWelcomeRow = createSettingsRow(
+        "Custom Welcome Text",
+        "Our cool welcome text",
+        "gplus_custom_welcome",
+        true,
+        () => { replaceWelcomeText(); }
+      );
     
     wrapper.appendChild(allInButtonRow);
     wrapper.appendChild(customLogoRow);
     wrapper.appendChild(hideChallengesRow);
+    wrapper.appendChild(customWelcomeRow);
+
     contentContainer.appendChild(wrapper);
   });
 }
@@ -282,10 +319,11 @@ function injectAllInButton() {
 
 
 const observer = new MutationObserver(() => {
-  if (isInactivating) return; // block loops
+  if (isInactivating) return;
 
-  injectGamblitCategory(); 
+  injectGamblitCategory();
   updateChallengesVisibility();
+  replaceWelcomeText(); // Varmista että tämä rivi on tässä kohtaa koodia
 
   const isLogoEnabled = localStorage.getItem("gplus_custom_logo") !== "false";
   if (isLogoEnabled) replaceLogo();

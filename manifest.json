@@ -9,13 +9,14 @@
   "host_permissions": [
     "*://*.gamblit.net/*"
   ],
-  "content_scripts": [
-    {
-      "matches": ["*://*.gamblit.net/*"],
-      "js": ["content.js", "blackjack.js", "observer.js"],
-      "run_at": "document_start"
-    }
-  ],
+"content_scripts": [
+  {
+    "matches": ["https://*/*"],
+    "js": ["helpers.js", "ui.js", "content.js", "create.js"]
+    
+  }
+],
+
   "web_accessible_resources": [
     {
       "resources": ["logo-plus.png"],

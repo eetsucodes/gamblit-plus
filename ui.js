@@ -28,15 +28,21 @@ function replaceWelcomeText() {
 
 
 function replaceLogo() {
-    const logoImg = document.querySelector('img[src*="/assets/logo-"]') || 
+  const logoImg = document.querySelector('img[src*="/assets/logo-"]') || 
                   document.querySelector('img[src^="data:image/svg+xml"]') ||
                   document.querySelector('img[alt="Logo"]') || 
                   document.querySelector('img[alt="logo"]');
   if (logoImg) {
-    const newLogoUrl = browser.runtime.getURL("gpluslogo.png");
+    const newLogoUrl = browser.runtime.getURL("logo-plus.png");
     if (logoImg.src !== newLogoUrl) {
       logoImg.src = newLogoUrl;
-      console.log("G+ : Logo replaced successfully!");
+      
+      // Override using hardcoded pixel dimensions (40% of the original scale)
+      logoImg.style.setProperty('width', '50px', 'important');
+      logoImg.style.setProperty('height', '65px', 'important');
+      logoImg.style.setProperty('max-width', '50px', 'important');
+      
+      console.log("G+ : Logo replaced and shrunk to fixed pixel size!");
     }
   }
 }

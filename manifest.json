@@ -24,8 +24,12 @@
     }
   ],
   "browser_specific_settings": {
-    "gecko": {
-      "id": "gamblitplus@paikallinen.testi"
+  "gecko": {
+    "id": "gamblit-plus@eetsucodes",
+    "data_collection_permissions": {
+      "required": ["none"]
     }
   }
+}
+
 }

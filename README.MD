@@ -1,5 +1,5 @@
 # GAMBLIT +
-
+## GAMBLIT + MADE IT TO MOZILLA STORE https://addons.mozilla.org/en-US/firefox/addon/gamblit/
 > "The Best Tool for Gamblit Players"
 
 Gamblit+ includes many loved features and it's 100% open source. Gamblit+ offers Gamblit players new settings to develop their experience. 
